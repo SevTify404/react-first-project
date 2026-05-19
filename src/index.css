@@ -131,3 +131,35 @@
     @apply font-mono;
     }
 }
+
+@layer utilities {
+  @keyframes fadeInSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOutSlideDown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  .animate-fade-in-slide-up {
+    animation: fadeInSlideUp 400ms ease-out;
+  }
+
+  .animate-fade-out-slide-down {
+    animation: fadeOutSlideDown 400ms ease-in forwards;
+  }
+}

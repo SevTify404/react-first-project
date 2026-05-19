@@ -2,41 +2,42 @@ import {
     createBrowserRouter,
 } from 'react-router'
 
-import App  from "./App.tsx";
-import AppLayout from "@/layouts/AppLayout.tsx";
+import App  from "../App.tsx";
+import AdminLayout from "@/layouts/AdminLayout.tsx";
 import Placeholder from "@/components/Placeholder.tsx";
+import { PATHS_MAPPING } from "./paths-mapping.ts";
 
 export const router = createBrowserRouter([
     {
-        path: '/',
+        path: PATHS_MAPPING.HOME,
         Component: App,
     },
     {
-        path: '/admin',
-        Component: AppLayout,
+        path: PATHS_MAPPING.ADMIN,
+        Component: AdminLayout,
         children: [
             {
-                path: 'dashboard',
+                path: PATHS_MAPPING.ADMIN_DASHBOARD,
                 Component: Placeholder,
             },
             {
-                path: 'produits',
+                path: PATHS_MAPPING.ADMIN_PRODUCTS,
                 Component: Placeholder,
             },
             {
-                path: 'commandes',
+                path: PATHS_MAPPING.ADMIN_ORDERS,
                 Component: Placeholder,
             },
             {
-                path: 'clients',
+                path: PATHS_MAPPING.ADMIN_CUSTOMERS,
                 Component: Placeholder,
             },
             {
-                path: 'logs',
+                path: PATHS_MAPPING.ADMIN_LOGS,
                 Component: Placeholder,
             },
             {
-                path: 'settings',
+                path: PATHS_MAPPING.ADMIN_SETTINGS,
                 Component: Placeholder,
             },
         ]

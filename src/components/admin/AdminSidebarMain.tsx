@@ -1,11 +1,11 @@
-import {SidebarMenu, SidebarMenuButton, SidebarMenuItem,} from "@/components/ui/sidebar"
+import {SidebarMenu, SidebarMenuButton, SidebarMenuItem,} from "@/components/ui/sidebar.tsx"
 
-import type {Sidebaritem} from "@/components/AppSidebar.tsx";
+import type {Sidebaritem} from "@/components/admin/AdminSidebar.tsx";
 import {CircleArrowRight} from "lucide-react";
 import {NavLink, useLocation} from "react-router";
 
 
-export function NavMain({items}: Readonly<{ items: Sidebaritem[] }>) {
+export function AdminSidebarMain({items}: Readonly<{ items: Sidebaritem[] }>) {
     const { pathname } = useLocation()
     return (
         <SidebarMenu className={"space-y-1"}>

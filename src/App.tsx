@@ -1,35 +1,37 @@
 import {Button} from "@/components/ui/button.tsx";
-import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 import toast from "react-hot-toast";
 import {CheckmarkCircle02Icon} from "@hugeicons/core-free-icons";
 import {HugeiconsIcon} from "@hugeicons/react";
+import useTheme from "@/hooks/useTheme.ts";
+import {useNavigate} from "react-router";
+import { PATHS_MAPPING } from "@/routing/paths-mapping.ts";
 
 function App() {
-    return (
-        <div className="min-h-screen flex gap-3 items-center justify-center bg-gray-100">
-            <Button variant="default" onClick={() => {
-                toast('Hello World', {
-                    duration: 700,
-                    position: 'top-right',
+    const {toggleTheme} = useTheme();
+    const navigate = useNavigate();
 
+    return (
+        <div className="min-h-screen flex gap-3 items-center justify-center bg-background">
+            <Button variant="default" onClick={() => {
+                toast('Navigation vers le page Admin', {
+                    duration: 1500,
+                    position: 'top-right',
                     icon: <HugeiconsIcon icon={CheckmarkCircle02Icon} />,
                 });
+                navigate(PATHS_MAPPING.ADMIN);
             }}>
-                Ok Ok Okkkkkkkkkk
+                Test Vers Admin
             </Button>
-            <Select>
-                <SelectTrigger className="w-45">
-                    <SelectValue placeholder="Theme"/>
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectGroup>
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
-
-                    </SelectGroup>
-                </SelectContent>
-            </Select>
+            <Button variant="outline" onClick={() => {
+                toast(`Changement de thème`, {
+                    duration: 1000,
+                    position: 'top-right',
+                    icon: <HugeiconsIcon icon={CheckmarkCircle02Icon} />,
+                });
+                toggleTheme()
+            }}>
+                Test Theme (Actuel: jsp)
+            </Button>
             {/*<Toaster />*/}
         </div>
     )

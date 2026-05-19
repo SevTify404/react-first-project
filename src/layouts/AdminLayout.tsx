@@ -1,12 +1,11 @@
 import {Outlet} from "react-router";
-import {AppSidebar} from "@/components/AppSidebar.tsx";
+import {AdminSidebar} from "@/components/admin/AdminSidebar.tsx";
 import {SidebarInset, SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar.tsx";
 
-function AppLayout() {
+function AdminLayout() {
     return (
-        <div>
             <SidebarProvider>
-                <AppSidebar/>
+                <AdminSidebar/>
                 <SidebarInset>
                     <header className=" h-16 w-full border-b flex items-center justify-between">
                             <SidebarTrigger />
@@ -14,8 +13,7 @@ function AppLayout() {
                     <Outlet/>
                 </SidebarInset>
             </SidebarProvider>
-        </div>
     )
 }
 
-export default AppLayout;
+export default AdminLayout;
