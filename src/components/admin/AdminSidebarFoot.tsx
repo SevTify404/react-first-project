@@ -1,4 +1,4 @@
-import {Avatar, AvatarFallback,} from "@/components/ui/avatar"
+import {Avatar, AvatarFallback,} from "@/components/ui/avatar.tsx"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,8 +7,8 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@/components/ui/sidebar"
+} from "@/components/ui/dropdown-menu.tsx"
+import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@/components/ui/sidebar.tsx"
 import {HugeiconsIcon} from "@hugeicons/react"
 import {
     ArrowRight01Icon,
@@ -23,10 +23,11 @@ import {Separator} from "@/components/ui/separator.tsx";
 import {Settings} from "lucide-react";
 import {extractUserInitials} from "@/utils/extractor.ts";
 import {NavLink, useLocation} from "react-router";
+import { FULL_ADMIN_ROUTES_MAPPING } from "@/routing/paths-mapping.ts";
 
-export function NavUser({
-                            user,
-                        }: Readonly<{
+export function AdminSidebarFoot({
+                                     user,
+                                 }: Readonly<{
     user: {
         name: string
         email: string
@@ -38,8 +39,8 @@ export function NavUser({
     return (
         <SidebarMenu>
             <SidebarMenuItem className="flex justify-center">
-                <SidebarMenuButton tooltip="Paramètres" isActive={pathname === '/admin/settings'} asChild>
-                    <NavLink to="/admin/settings" className="w-full">
+                <SidebarMenuButton tooltip="Paramètres" isActive={pathname === FULL_ADMIN_ROUTES_MAPPING.SETTINGS} asChild>
+                    <NavLink to={FULL_ADMIN_ROUTES_MAPPING.SETTINGS} className="w-full">
                         <div className="flex w-full ">
                             <Settings/>
                             <span className="ml-2">Paramètres</span>

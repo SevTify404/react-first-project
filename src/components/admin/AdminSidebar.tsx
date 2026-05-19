@@ -1,10 +1,10 @@
 import type {ReactElement} from "react";
 import * as React from "react"
 
-import {NavMain} from "@/components/nav-main"
-import {NavUser} from "@/components/nav-user"
-import {SideBarHead} from "@/components/side-bar-head.tsx"
-import {Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail,} from "@/components/ui/sidebar"
+import {AdminSidebarMain} from "@/components/admin/AdminSidebarMain.tsx"
+import {AdminSidebarFoot} from "@/components/admin/AdminSidebarFoot.tsx"
+import {AdminSideBarHead} from "@/components/admin/AdminSideBarHead.tsx"
+import {Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail,} from "@/components/ui/sidebar.tsx"
 import {HugeiconsIcon} from "@hugeicons/react"
 import {
     DashboardSquare03Icon,
@@ -15,12 +15,11 @@ import {
 } from "@hugeicons/core-free-icons"
 import {TooltipProvider} from "@/components/ui/tooltip.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
-import {SidebarScopes} from "@/types/SidebarScopes.tsx";
+import { FULL_ADMIN_ROUTES_MAPPING } from "@/routing/paths-mapping.ts";
 
 export interface Sidebaritem {
     icon: ReactElement,
     title: string,
-    scope: string,
     url: string,
 }
 
@@ -28,32 +27,27 @@ const sidebarItems: Sidebaritem[] = [
     {
         title: "Dashboard",
         icon: <HugeiconsIcon icon={DashboardSquare03Icon} strokeWidth={2}/>,
-        scope: SidebarScopes.ALL,
-        url: '/admin/dashboard'
+        url: FULL_ADMIN_ROUTES_MAPPING.DASHBOARD
     },
     {
         title: "Produits",
         icon: <HugeiconsIcon icon={PackageIcon} strokeWidth={2}/>,
-        scope: SidebarScopes.ALL,
-        url: '/admin/produits'
+        url: FULL_ADMIN_ROUTES_MAPPING.PRODUCTS
     },
     {
         title: "Commandes",
         icon: <HugeiconsIcon icon={ShoppingBag02Icon} strokeWidth={2}/>,
-        scope: SidebarScopes.ALL,
-        url: '/admin/commandes'
+        url: FULL_ADMIN_ROUTES_MAPPING.ORDERS
     },
     {
         title: "Clients",
         icon: <HugeiconsIcon icon={UserGroup03Icon} strokeWidth={2}/>,
-        scope: SidebarScopes.ALL,
-        url: '/admin/clients'
+        url: FULL_ADMIN_ROUTES_MAPPING.CUSTOMERS
     },
     {
         title: "Logs",
         icon: <HugeiconsIcon icon={TransactionHistoryIcon} strokeWidth={2}/>,
-        scope: SidebarScopes.ADMIN_ONLY,
-        url: '/admin/logs'
+        url: FULL_ADMIN_ROUTES_MAPPING.LOGS
     },
 ]
 
@@ -62,19 +56,20 @@ const userData = {
     email: "maaaaa@souffrance.com",
 }
 
-export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
+export function AdminSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
     return (
         <TooltipProvider>
-            <Sidebar collapsible="icon" {...props}>
+            {/*Ou carrément on utilise collapsible="icon"*/}
+            <Sidebar collapsible="offcanvas" {...props}>
                 <SidebarHeader>
-                    <SideBarHead/>
+                    <AdminSideBarHead/>
                 </SidebarHeader>
                 <Separator/>
                 <SidebarContent className="mt-3">
-                    <NavMain items={sidebarItems}/>
+                    <AdminSidebarMain items={sidebarItems}/>
                 </SidebarContent>
                 <SidebarFooter>
-                    <NavUser user={userData}/>
+                    <AdminSidebarFoot user={userData}/>
                 </SidebarFooter>
                 <SidebarRail/>
             </Sidebar>
