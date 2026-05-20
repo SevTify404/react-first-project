@@ -60,7 +60,7 @@ export function AdminSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
     return (
         <TooltipProvider>
             {/*Ou carrément on utilise collapsible="icon"*/}
-            <Sidebar collapsible="offcanvas" {...props}>
+            <Sidebar collapsible="icon" {...props}>
                 <SidebarHeader>
                     <AdminSideBarHead/>
                 </SidebarHeader>
