@@ -6,7 +6,7 @@ import useTheme from "@/hooks/useTheme.ts";
 import {useNavigate} from "react-router";
 import { PATHS_MAPPING } from "@/routing/paths-mapping.ts";
 
-function App() {
+function Index() {
     const {toggleTheme} = useTheme();
     const navigate = useNavigate();
 
@@ -38,4 +38,4 @@ function App() {
 
 }
 
-export default App
+export default Index

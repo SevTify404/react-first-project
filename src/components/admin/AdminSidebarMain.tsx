@@ -1,9 +1,9 @@
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem} from "@/components/ui/sidebar.tsx"
 
-import type {Sidebaritem} from "@/components/admin/AdminSidebar.tsx";
 import {CircleArrowRight} from "lucide-react";
 import {NavLink, useLocation} from "react-router";
 import {useMobileSidebar} from "@/hooks/useMobileSidebar.ts";
+import type {Sidebaritem} from "@/types/sidebar.ts";
 
 
 export function AdminSidebarMain({items}: Readonly<{ items: Sidebaritem[] }>) {
