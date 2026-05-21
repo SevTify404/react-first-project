@@ -22,8 +22,9 @@ import {
 import {Separator} from "@/components/ui/separator.tsx";
 import {Settings} from "lucide-react";
 import {extractUserInitials} from "@/utils/extractor.ts";
-import {NavLink, useLocation} from "react-router";
-import { FULL_ADMIN_ROUTES_MAPPING } from "@/routing/paths-mapping.ts";
+import {NavLink, useLocation, useNavigate} from "react-router";
+import {FULL_ADMIN_ROUTES_MAPPING, PATHS_MAPPING} from "@/routing/paths-mapping.ts";
+import {useMobileSidebar} from "@/hooks/useMobileSidebar.ts";
 
 export function AdminSidebarFoot({
                                      user,
@@ -35,12 +36,20 @@ export function AdminSidebarFoot({
 }>) {
     const {isMobile} = useSidebar()
     const {pathname} = useLocation()
+    const navigate = useNavigate();
+    const {collapseOnlyOnMobile} = useMobileSidebar()
+
 
     return (
         <SidebarMenu>
             <SidebarMenuItem className="flex justify-center">
-                <SidebarMenuButton tooltip="Paramètres" isActive={pathname === FULL_ADMIN_ROUTES_MAPPING.SETTINGS} asChild>
-                    <NavLink to={FULL_ADMIN_ROUTES_MAPPING.SETTINGS} className="w-full">
+                <SidebarMenuButton
+                    tooltip="Paramètres" isActive={pathname === FULL_ADMIN_ROUTES_MAPPING.SETTINGS} asChild>
+                    <NavLink
+                        to={FULL_ADMIN_ROUTES_MAPPING.SETTINGS}
+                        className="w-full"
+                        onClick={collapseOnlyOnMobile}
+                    >
                         <div className="flex w-full ">
                             <Settings/>
                             <span className="ml-2">Paramètres</span>
@@ -110,9 +119,11 @@ export function AdminSidebarFoot({
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                            navigate(PATHS_MAPPING.HOME);
+                        }}>
                             <HugeiconsIcon icon={LogoutIcon} strokeWidth={2}/>
-                            Log out
+                            Déconnexion
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
