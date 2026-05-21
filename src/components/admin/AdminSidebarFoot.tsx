@@ -39,7 +39,6 @@ export function AdminSidebarFoot({
     const navigate = useNavigate();
     const {collapseOnlyOnMobile} = useMobileSidebar()
 
-
     return (
         <SidebarMenu>
             <SidebarMenuItem className="flex justify-center">
@@ -119,7 +118,9 @@ export function AdminSidebarFoot({
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem onClick={() => {
+                        <DropdownMenuItem onSelect={(e) => {
+                            // Sans le prevent default çà bug sur mobile
+                            e.preventDefault();
                             navigate(PATHS_MAPPING.HOME);
                         }}>
                             <HugeiconsIcon icon={LogoutIcon} strokeWidth={2}/>
