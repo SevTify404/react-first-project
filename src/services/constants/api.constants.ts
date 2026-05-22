@@ -1,1 +1,3 @@
-export const API_BASE_URL = "https://api.escuelajs.co/api/v1"
+export const ACCESS_TOKEN = 'accessToken'
+export const REFRESH_TOKEN = 'refreshToken'
+

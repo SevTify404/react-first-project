@@ -15,6 +15,10 @@ export const PATHS_MAPPING = {
   ADMIN_CUSTOMERS: 'clients',
   ADMIN_LOGS: 'logs',
   ADMIN_SETTINGS: 'settings',
+
+  // Routes d'authentification
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register'
 } as const;
 
 /**

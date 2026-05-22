@@ -41,5 +41,9 @@ export const router = createBrowserRouter([
                 Component: Placeholder,
             },
         ]
+    },
+    {
+        path: PATHS_MAPPING.LOGIN
+        // ajouter le componanet après
     }
 ])
