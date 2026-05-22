@@ -4,7 +4,7 @@ import {CheckmarkCircle02Icon} from "@hugeicons/core-free-icons";
 import {HugeiconsIcon} from "@hugeicons/react";
 import useTheme from "@/hooks/useTheme.ts";
 import {useNavigate} from "react-router";
-import { PATHS_MAPPING } from "@/routing/paths-mapping.ts";
+import {FULL_ADMIN_ROUTES_MAPPING} from "@/routing/paths-mapping.ts";
 
 function Index() {
     const {toggleTheme} = useTheme();
@@ -18,7 +18,7 @@ function Index() {
                     position: 'top-right',
                     icon: <HugeiconsIcon icon={CheckmarkCircle02Icon} />,
                 });
-                navigate(PATHS_MAPPING.ADMIN);
+                navigate(FULL_ADMIN_ROUTES_MAPPING.DASHBOARD);
             }}>
                 Test Vers Admin
             </Button>
