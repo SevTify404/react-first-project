@@ -3,7 +3,7 @@ import axios, { isAxiosError } from "axios";
 import { router } from "../routing/router";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants/api.constants";
 
-export const API_BASE_URL = "https://api.escuelajs.co/api/v1";
+export const API_BASE_URL = "https://dummyjson.com";
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
