@@ -2,15 +2,15 @@ import {
     createBrowserRouter,
 } from 'react-router'
 
-import App  from "../App.tsx";
+import Index  from "../pages/Index.tsx";
 import AdminLayout from "@/layouts/AdminLayout.tsx";
-import Placeholder from "@/components/Placeholder.tsx";
+import Placeholder from "@/pages/Placeholder.tsx";
 import { PATHS_MAPPING } from "./paths-mapping.ts";
 
 export const router = createBrowserRouter([
     {
         path: PATHS_MAPPING.HOME,
-        Component: App,
+        Component: Index,
     },
     {
         path: PATHS_MAPPING.ADMIN,
