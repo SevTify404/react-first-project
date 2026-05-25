@@ -8,7 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Menu } from "lucide-react";
+import { CircleUserRound, Menu, ShoppingCart, Heart } from "lucide-react";
 
 export const NavigationSheet = () => {
   return (
@@ -24,7 +24,18 @@ export const NavigationSheet = () => {
       </SheetTrigger>
       <SheetContent className="px-6 py-3">
         <Logo />
-        <NavMenu className="mt-6 [&>div]:h-full" orientation="vertical" />
+        <div className="ml-2 flex gap-3 mt-6">
+          <Button className=" sm:inline-flex" size={"sm"}>
+            <Heart />
+          </Button>
+          <Button className=" sm:inline-flex" size={"sm"}>
+            <ShoppingCart />
+          </Button>
+          <Button className=" sm:inline-flex" size={"sm"}>
+            <CircleUserRound />
+          </Button>
+        </div>
+        <NavMenu className="[&>div]:h-full" orientation="vertical" />
       </SheetContent>
     </Sheet>
   );

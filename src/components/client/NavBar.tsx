@@ -2,6 +2,8 @@ import { Logo } from "@/components/client/Logo";
 import { NavMenu } from "@/components/client/NavMenu";
 import { NavigationSheet } from "@/components/client/Navigation-sheet";
 import { Button } from "@/components/ui/button";
+import { CircleUserRound, Heart, ShoppingCart } from "lucide-react";
+import SearchInputDialog from "./SearchInputDialog";
 
 const Navbar = () => {
   return (
@@ -13,13 +15,16 @@ const Navbar = () => {
         <NavMenu className="hidden md:block" />
 
         <div className="flex items-center gap-3">
-          <Button
-            className="hidden rounded-full sm:inline-flex"
-            variant="outline"
-          >
-            Sign In
+          <SearchInputDialog />
+          <Button className="hidden sm:inline-flex">
+            <Heart />
           </Button>
-          <Button className="rounded-full">Get Started</Button>
+          <Button className="hidden sm:inline-flex">
+            <ShoppingCart />
+          </Button>
+          <Button className="hidden sm:inline-flex">
+            <CircleUserRound />
+          </Button>
 
           {/* Mobile Menu */}
           <div className="md:hidden">
