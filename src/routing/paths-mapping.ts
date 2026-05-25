@@ -21,7 +21,6 @@ export const PATHS_MAPPING = {
   REGISTER: '/auth/register',
 
   // Routes pour le client
-  CLIENT: '/client',
   CLIENT_PRODUCTS: 'product',
   CLIENT_NEW_ARRIVALS: 'new-arrivals',
   CLIENT_DEALS: 'deals',
@@ -37,7 +36,7 @@ export const getAdminRoute = (path: string): string => {
 };
 
 export const getClientRoute = (path: string): string => {
-  return `${PATHS_MAPPING.ADMIN}/${path}`;
+  return `${PATHS_MAPPING.HOME}${path}`;
 };
 
 /**
@@ -55,8 +54,8 @@ export const FULL_ADMIN_ROUTES_MAPPING = {
 
 export const CLIENT_ROUTES_MAPPING = {
   NEW_ARRIVALS: getClientRoute(PATHS_MAPPING.CLIENT_NEW_ARRIVALS),
-  PRODUCTS: getAdminRoute(PATHS_MAPPING.CLIENT_PRODUCTS),
-  DEALS: getAdminRoute(PATHS_MAPPING.CLIENT_DEALS),
+  PRODUCTS: getClientRoute(PATHS_MAPPING.CLIENT_PRODUCTS),
+  DEALS: getClientRoute(PATHS_MAPPING.CLIENT_DEALS),
   SUPPORT: getClientRoute(PATHS_MAPPING.CLIENT_SUPPORT)
 } as const;
 
