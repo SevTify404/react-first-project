@@ -4,13 +4,25 @@ import {
 
 import Index  from "../pages/Index.tsx";
 import AdminLayout from "@/layouts/AdminLayout.tsx";
+import ClientLayout from "@/layouts/ClientLayout.tsx";
 import Placeholder from "@/pages/Placeholder.tsx";
 import { PATHS_MAPPING } from "./paths-mapping.ts";
 
 export const router = createBrowserRouter([
     {
-        path: PATHS_MAPPING.HOME,
-        Component: Index,
+        path: PATHS_MAPPING.HOME, 
+        Component: ClientLayout,
+        children: [
+            {
+                index: true,
+                Component: Index,
+            },
+            {
+                path: PATHS_MAPPING.CLIENT_PRODUCTS,
+                Component: Placeholder,
+            },
+            // on va  ajouter ici les autres routes client (support, deals, etc.)
+        ]
     },
     {
         path: PATHS_MAPPING.ADMIN,
@@ -41,5 +53,9 @@ export const router = createBrowserRouter([
                 Component: Placeholder,
             },
         ]
+    },
+    {
+        path: PATHS_MAPPING.LOGIN
+        // ajouter le componanet après
     }
 ])

@@ -21,7 +21,7 @@ import {
 } from "@hugeicons/core-free-icons"
 import {Separator} from "@/components/ui/separator.tsx";
 import {Settings} from "lucide-react";
-import {extractUserInitials} from "@/utils/extractor.ts";
+import {extractUserInitials} from "@/routing/utils/extractor";
 import {NavLink, useLocation, useNavigate} from "react-router";
 import {FULL_ADMIN_ROUTES_MAPPING, PATHS_MAPPING} from "@/routing/paths-mapping.ts";
 import {useMobileSidebar} from "@/hooks/useMobileSidebar.ts";

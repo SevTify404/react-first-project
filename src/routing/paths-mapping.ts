@@ -15,6 +15,16 @@ export const PATHS_MAPPING = {
   ADMIN_CUSTOMERS: 'clients',
   ADMIN_LOGS: 'logs',
   ADMIN_SETTINGS: 'settings',
+
+  // Routes d'authentification
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register',
+
+  // Routes pour le client
+  CLIENT_PRODUCTS: 'product',
+  CLIENT_NEW_ARRIVALS: 'new-arrivals',
+  CLIENT_DEALS: 'deals',
+  CLIENT_SUPPORT: 'client-support'
 } as const;
 
 /**
@@ -23,6 +33,10 @@ export const PATHS_MAPPING = {
  */
 export const getAdminRoute = (path: string): string => {
   return `${PATHS_MAPPING.ADMIN}/${path}`;
+};
+
+export const getClientRoute = (path: string): string => {
+  return `${PATHS_MAPPING.HOME}${path}`;
 };
 
 /**
@@ -35,5 +49,13 @@ export const FULL_ADMIN_ROUTES_MAPPING = {
   CUSTOMERS: getAdminRoute(PATHS_MAPPING.ADMIN_CUSTOMERS),
   LOGS: getAdminRoute(PATHS_MAPPING.ADMIN_LOGS),
   SETTINGS: getAdminRoute(PATHS_MAPPING.ADMIN_SETTINGS),
+} as const;
+
+
+export const CLIENT_ROUTES_MAPPING = {
+  NEW_ARRIVALS: getClientRoute(PATHS_MAPPING.CLIENT_NEW_ARRIVALS),
+  PRODUCTS: getClientRoute(PATHS_MAPPING.CLIENT_PRODUCTS),
+  DEALS: getClientRoute(PATHS_MAPPING.CLIENT_DEALS),
+  SUPPORT: getClientRoute(PATHS_MAPPING.CLIENT_SUPPORT)
 } as const;
 
