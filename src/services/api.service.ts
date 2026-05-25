@@ -80,6 +80,13 @@ function handleToast() {
   toast(`Votre requette n'a pas pu aboutir`, {
       duration: 1000,
       position: 'top-right',
-      icon: React.createElement(HugeiconsIcon, { icon: SettingError03Icon })
+      icon: React.createElement(
+        HugeiconsIcon, 
+        { 
+          icon: SettingError03Icon, 
+          primaryColor: "red", 
+          secondaryColor: "red"
+        }
+      )
   });
 }
