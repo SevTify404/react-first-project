@@ -78,7 +78,7 @@ export interface RefreshData {
 
 function handleToast() {
   toast(`Votre requette n'a pas pu aboutir`, {
-      duration: 1000,
+      duration: 3000,
       position: 'top-right',
       icon: React.createElement(
         HugeiconsIcon, 
