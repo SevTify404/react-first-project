@@ -2,6 +2,11 @@ import { PATHS_MAPPING } from "@/routing/paths-mapping";
 import axios, { isAxiosError } from "axios";
 import { router } from "../routing/router";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants/api.constants";
+import toast from "react-hot-toast";
+import { SettingError03Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import React from "react";
+
 
 export const API_BASE_URL = "https://dummyjson.com";
 
@@ -50,6 +55,7 @@ api.interceptors.response.use(
           refreshError.response?.status !== 200
         ) {
           handleLogout();
+          handleToast();
           router.navigate(PATHS_MAPPING.LOGIN);
         }
         throw new Error("Erreur survenue");
@@ -68,4 +74,12 @@ function handleLogout() {
 export interface RefreshData {
   accessToken: string,
   refreshToken: string
+}
+
+function handleToast() {
+  toast(`Votre requette n'a pas pu aboutir`, {
+      duration: 1000,
+      position: 'top-right',
+      icon: React.createElement(HugeiconsIcon, { icon: SettingError03Icon })
+  });
 }
