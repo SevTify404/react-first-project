@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 
-const loginSchemas = z.object(
+export const loginSchemas = z.object(
   {
     username: z
       .string({ message: "Le nom d'utilisateur doit être une chaîne de caractères." })
@@ -14,7 +14,7 @@ const loginSchemas = z.object(
     expiresInMins: z
       .number({ message: "Le durée de la connexion doit être un nombre." })
       .int({ message: "Le durée de la connexion doit etre un entier" })
-      .default(60),
+      .positive({ message: "Le durée de la connexion doit être un nombre positif." }),
   },
   {
     message: "Les données de connexion sont invalides.",
@@ -23,7 +23,7 @@ const loginSchemas = z.object(
 
 
 
-const loginResponseSchemas = z.object(
+export const loginResponseSchemas = z.object(
   {
     id: z
       .number()
@@ -56,7 +56,7 @@ const loginResponseSchemas = z.object(
 );
 
 
-const refreshTokenResponseSchemas = z.object(
+export const refreshTokenResponseSchemas = z.object(
   {
     accessToken: z
       .string(),
@@ -67,7 +67,21 @@ const refreshTokenResponseSchemas = z.object(
 );
 
 
+export const meResponseSchema = z.object({
+  id: z.number().int(),
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string().email(),
+  username: z.string(),
+  image: z.string().url(),
+  role: z.enum(['admin', 'user', 'moderator']),
+}).strip(); // ignore tous les autres champs de la réponse
+
+
+
+
 // types inférés pour typscripte clairement
 export type LoginData = z.infer<typeof loginSchemas>;
 export type LoginResponseData = z.infer<typeof loginResponseSchemas>;
 export type RefreshTokenResponseData = z.infer<typeof refreshTokenResponseSchemas>;
+export type MeResponse = z.infer<typeof meResponseSchema>;
