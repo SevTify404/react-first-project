@@ -1,11 +1,13 @@
-import { PATHS_MAPPING } from "@/routing/paths-mapping";
-import axios, { isAxiosError } from "axios";
+import { CLIENT_ROUTES_MAPPING, PATHS_MAPPING } from "@/routing/paths-mapping";
+import axios from "axios";
 import { router } from "../routing/router";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants/api.constants";
 import toast from "react-hot-toast";
 import { SettingError03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React from "react";
+import { useAuthStore } from "@/stores/auth.store";
+import { getCookie, setCookie } from "@/lib/cookie";
 
 
 export const API_BASE_URL = "https://dummyjson.com";
@@ -16,15 +18,14 @@ export const api = axios.create({
   timeout: 60_000,
 });
 
-// configuration de quelques intercepteurs direct
 
-//Meme si dummyjson utilise les cookies, on va configure l'ajout auto dans le Bearer //voir docs
-// comme ça le cookies servira de default fallback
+// configuration de quelques intercepteurs direct
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem(ACCESS_TOKEN);
+  const token = getCookie(ACCESS_TOKEN);
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
+
 
 // Gestion global des erreurs
 api.interceptors.response.use(
@@ -32,43 +33,63 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Vérifie si l'erreur est un 401 et si on n'a pas déjà tenté un retry pour cette requête
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes('/auth/login')
+    ) {
+      originalRequest._retry = true; 
 
       try {
-        const currentRefreshToken = localStorage.getItem(REFRESH_TOKEN);
+        const currentRefreshToken = getCookie(REFRESH_TOKEN);
+
+        if (!currentRefreshToken) {
+          handleLogout();
+          router.navigate(CLIENT_ROUTES_MAPPING.HOME);
+          return Promise.reject(new Error("Session expirée"));
+        }
 
         const { data } = await axios.post<RefreshData>(`${API_BASE_URL}/auth/refresh`, {
           refreshToken: currentRefreshToken,
         });
 
-        // On stocke les nouveaux jetons
-        localStorage.setItem(ACCESS_TOKEN, data.accessToken);
-        localStorage.setItem(REFRESH_TOKEN, data.refreshToken);
+        setCookie(ACCESS_TOKEN, data.accessToken, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict"
+        });
 
-        originalRequest.headers.Authorization = `Bearer ${data.refreshToken}`;
+        setCookie(REFRESH_TOKEN, data.refreshToken, {
+          expires: 2,
+          secure: true,
+          sameSite: "Strict"
+        });
+
+        // accessToken et non refreshToken
+        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
         return api(originalRequest);
-      } catch (refreshError) {
-        if (
-          isAxiosError(refreshError) &&
-          refreshError.response?.status !== 200
-        ) {
-          handleLogout();
-          handleToast();
-          router.navigate(PATHS_MAPPING.LOGIN);
-        }
-        throw new Error("Erreur survenue");
+
+      } catch {
+        handleLogout();
+        handleToast();
+        router.navigate(PATHS_MAPPING.HOME);
+        return Promise.reject(new Error("Session expirée, veuillez vous reconnecter"));
       }
     }
 
-    throw new Error("Une erreur est survenue, veuillez réessayer");
+    // Toutes les autres erreurs
+    const message =
+      error.response?.data?.message ??
+      error.message ??
+      "Une erreur est survenue, veuillez réessayer";
+
+    return Promise.reject(new Error(message));
   },
 );
 
+
 function handleLogout() {
-  localStorage.removeItem(ACCESS_TOKEN);
-  localStorage.removeItem(REFRESH_TOKEN);
+ useAuthStore.getState().clearAuth();
 }
 
 export interface RefreshData {

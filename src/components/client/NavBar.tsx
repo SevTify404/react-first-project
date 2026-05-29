@@ -2,8 +2,9 @@ import { Logo } from "@/components/client/Logo";
 import { NavMenu } from "@/components/client/NavMenu";
 import { NavigationSheet } from "@/components/client/Navigation-sheet";
 import { Button } from "@/components/ui/button";
-import { CircleUserRound, Heart, ShoppingCart } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import SearchInputDialog from "./SearchInputDialog";
+import LoginInputDialog from "./LoginInputDialog";
 
 const Navbar = () => {
   return (
@@ -23,7 +24,7 @@ const Navbar = () => {
             <ShoppingCart />
           </Button>
           <Button className="hidden sm:inline-flex">
-            <CircleUserRound />
+            <LoginInputDialog />
           </Button>
 
           {/* Mobile Menu */}
