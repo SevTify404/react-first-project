@@ -12,7 +12,6 @@ function Index() {
 
     return (
         <div className="min-h-screen flex gap-3 items-center justify-center bg-background">
-            Na
             <Button variant="default" onClick={() => {
                 toast('Navigation vers le page Admin', {
                     duration: 1500,
