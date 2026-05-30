@@ -1,5 +1,3 @@
-"use client";
-
 import onlineshopping from "@/assets/images/bag.png";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,12 +17,19 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const { mutate: login, isPending, error } = useLogin();
 
-  const { register, handleSubmit, formState: { errors }, } = useForm<LoginData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isDirty },
+  } = useForm<LoginData>({
     resolver: zodResolver(loginSchemas),
+    mode: "onChange",
     defaultValues: {
       expiresInMins: 60,
     },
   });
+
+  const canSubmit = isValid && isDirty && !isPending;
 
   const onSubmit = (data: LoginData) => {
     login(data);
@@ -39,12 +44,15 @@ export default function LoginForm() {
         {/* Erreur globale renvoyée par l'API */}
         {error && <p className="text-sm text-red-500">{error.message}</p>}
 
-        <InputGroup>
+        <InputGroup
+          className={`
+    ${errors.username && "ring-2 ring-red-500/50 border-red-500 shadow-red-500"}
+  `}
+        >
           <InputGroupAddon>
             <UserIcon className="text-muted-foreground" />
           </InputGroupAddon>
           <InputGroupInput
-            className="border-0 shadow-none focus-visible:ring-0"
             placeholder="Username"
             type="text"
             {...register("username")}
@@ -54,12 +62,14 @@ export default function LoginForm() {
           <p className="text-sm text-red-500">{errors.username.message}</p>
         )}
 
-        <InputGroup>
+        <InputGroup 
+        className={`
+    ${errors.password && "ring-2 ring-red-500/50 border-red-500 shadow-red-500"}
+  `}>
           <InputGroupAddon>
             <LockIcon className="text-muted-foreground" />
           </InputGroupAddon>
           <InputGroupInput
-            className="border-0 shadow-none focus-visible:ring-0"
             placeholder="Password"
             type={showPassword ? "text" : "password"}
             {...register("password")}
@@ -81,7 +91,7 @@ export default function LoginForm() {
           <p className="text-sm text-red-500">{errors.password.message}</p>
         )}
 
-        <Button className="w-full" type="submit" disabled={isPending}>
+        <Button className="w-full" type="submit" disabled={!canSubmit}>
           {isPending ? "Connexion..." : "Se connecter"}
         </Button>
       </div>

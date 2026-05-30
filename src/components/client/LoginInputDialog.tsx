@@ -14,7 +14,7 @@ const LoginInputDialog = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Button>
-          <CircleUserRound size={"sm"} />
+          <CircleUserRound />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">

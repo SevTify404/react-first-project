@@ -29,7 +29,7 @@ const SearchInputDialog = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Button>
-          <Search size={isMobile ? "sm" : "default"} />
+          <Search/>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">

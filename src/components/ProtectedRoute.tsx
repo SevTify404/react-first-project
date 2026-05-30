@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router';
-import { useAuthStore } from '@/stores/auth.store';
+import { useAuthStore } from '@/stores/authStore';
 import { PATHS_MAPPING } from '@/routing/paths-mapping';
 import {  } from 'react-router';
 

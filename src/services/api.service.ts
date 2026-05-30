@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { SettingError03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React from "react";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuthStore } from "@/stores/authStore";
 import { getCookie, setCookie } from "@/lib/cookie";
 
 

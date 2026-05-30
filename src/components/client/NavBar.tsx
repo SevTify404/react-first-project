@@ -23,10 +23,7 @@ const Navbar = () => {
           <Button className="hidden sm:inline-flex">
             <ShoppingCart />
           </Button>
-          <Button className="hidden sm:inline-flex">
-            <LoginInputDialog />
-          </Button>
-
+          <LoginInputDialog />
           {/* Mobile Menu */}
           <div className="md:hidden">
             <NavigationSheet />
