@@ -33,6 +33,12 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    const redirectToLogin = () => {
+      handleLogout();
+      router.navigate(CLIENT_ROUTES_MAPPING.HOME);
+      return Promise.reject(new Error("Session expirée, veuillez vous reconnecter"));
+    };
+
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
@@ -44,14 +50,16 @@ api.interceptors.response.use(
         const currentRefreshToken = getCookie(REFRESH_TOKEN);
 
         if (!currentRefreshToken) {
-          handleLogout();
-          router.navigate(CLIENT_ROUTES_MAPPING.HOME);
-          return Promise.reject(new Error("Session expirée"));
+          return redirectToLogin();
         }
 
         const { data } = await axios.post<RefreshData>(`${API_BASE_URL}/auth/refresh`, {
           refreshToken: currentRefreshToken,
         });
+
+        if (!data || !data.accessToken || !data.refreshToken) {
+          return redirectToLogin();
+        }
 
         setCookie(ACCESS_TOKEN, data.accessToken, {
           expires: 1,

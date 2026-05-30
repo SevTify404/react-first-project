@@ -31,8 +31,6 @@ export function useLogin() {
   });
 }
 
-
-
 // fonction toast 
 function handleToast() {
   toast(`Connexion réussie`, {
@@ -41,7 +39,6 @@ function handleToast() {
       icon: React.createElement(
         HugeiconsIcon, 
         { 
-          size: 50,
           icon: ConnectIcon,
         }
       )
