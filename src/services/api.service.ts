@@ -1,4 +1,4 @@
-import { CLIENT_ROUTES_MAPPING, PATHS_MAPPING } from "@/routing/paths-mapping";
+import { CLIENT_ROUTES_MAPPING } from "@/routing/paths-mapping";
 import axios from "axios";
 import { router } from "../routing/router";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants/api.constants";
@@ -78,10 +78,8 @@ api.interceptors.response.use(
         return api(originalRequest);
 
       } catch {
-        handleLogout();
         handleToast();
-        router.navigate(PATHS_MAPPING.HOME);
-        return Promise.reject(new Error("Session expirée, veuillez vous reconnecter"));
+        return redirectToLogin()
       }
     }
 
@@ -90,7 +88,7 @@ api.interceptors.response.use(
       error.response?.data?.message ??
       error.message ??
       "Une erreur est survenue, veuillez réessayer";
-
+    handleToast(message)
     return Promise.reject(new Error(message));
   },
 );
@@ -105,8 +103,8 @@ export interface RefreshData {
   refreshToken: string
 }
 
-function handleToast() {
-  toast(`Votre requette n'a pas pu aboutir`, {
+function handleToast(msg: string = "Votre requette n'a pas pu aboutir") {
+  toast(msg, {
       duration: 3000,
       position: 'top-right',
       icon: React.createElement(
