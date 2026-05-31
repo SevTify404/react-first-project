@@ -14,6 +14,9 @@ const LoginInputDialog = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Button>
+          <span className="sr-only sm:not-sr-only">
+          Connexion
+          </span>
           <CircleUserRound />
         </Button>
       </DialogTrigger>

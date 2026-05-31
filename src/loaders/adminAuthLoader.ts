@@ -26,5 +26,7 @@ export default async function adminAuthLoader(): Promise<MeResponse> {
     throw redirect(PATHS_MAPPING.HOME);
   }
 
+  // Pour l'instant on ne fait rien avec ce retour,
+  //  mais bon on sait jamais
   return user;
 }
