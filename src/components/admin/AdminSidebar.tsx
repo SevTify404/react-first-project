@@ -6,7 +6,7 @@ import {AdminSideBarHead} from "@/components/admin/AdminSideBarHead.tsx"
 import {Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail,} from "@/components/ui/sidebar.tsx"
 import {TooltipProvider} from "@/components/ui/tooltip.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
-import {sidebarItems, userData} from "@/data/sidebar.tsx";
+import {sidebarItems} from "@/data/sidebar.tsx";
 
 export function AdminSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
     return (
@@ -21,7 +21,7 @@ export function AdminSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
                     <AdminSidebarMain items={sidebarItems}/>
                 </SidebarContent>
                 <SidebarFooter>
-                    <AdminSidebarFoot user={userData}/>
+                    <AdminSidebarFoot />
                 </SidebarFooter>
                 <SidebarRail/>
             </Sidebar>

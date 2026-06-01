@@ -1,33 +1,25 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { CircleUserRound } from "lucide-react";
-import LoginForm from "../customized/input/LoginForm";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
+import UserInfo from "./UserInfo";
 
-const LoginInputDialog = () => {
-  return (
+export default function UserInfoDialog() {
+    return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>
           <span className="sr-only sm:not-sr-only">
-          Connexion
+          Mon Compte
           </span>
           <CircleUserRound />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-xl">Se connecter</DialogTitle>
+          <DialogTitle className="text-xl">Mon compte</DialogTitle>
         </DialogHeader>
-        <LoginForm />
+        <UserInfo/>
       </DialogContent>
     </Dialog>
   );
-};
-
-export default LoginInputDialog;
+}

@@ -1,4 +1,4 @@
-import { CLIENT_ROUTES_MAPPING, PATHS_MAPPING } from "@/routing/paths-mapping";
+import { CLIENT_ROUTES_MAPPING } from "@/routing/paths-mapping";
 import axios from "axios";
 import { router } from "../routing/router";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants/api.constants";
@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { SettingError03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React from "react";
-import { useAuthStore } from "@/stores/auth.store";
+import { useAuthStore } from "@/stores/authStore";
 import { getCookie, setCookie } from "@/lib/cookie";
 
 
@@ -33,6 +33,12 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    const redirectToLogin = () => {
+      handleLogout();
+      router.navigate(CLIENT_ROUTES_MAPPING.HOME);
+      return Promise.reject(new Error("Session expirée, veuillez vous reconnecter"));
+    };
+
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
@@ -44,14 +50,16 @@ api.interceptors.response.use(
         const currentRefreshToken = getCookie(REFRESH_TOKEN);
 
         if (!currentRefreshToken) {
-          handleLogout();
-          router.navigate(CLIENT_ROUTES_MAPPING.HOME);
-          return Promise.reject(new Error("Session expirée"));
+          return redirectToLogin();
         }
 
         const { data } = await axios.post<RefreshData>(`${API_BASE_URL}/auth/refresh`, {
           refreshToken: currentRefreshToken,
         });
+
+        if (!data || !data.accessToken || !data.refreshToken) {
+          return redirectToLogin();
+        }
 
         setCookie(ACCESS_TOKEN, data.accessToken, {
           expires: 1,
@@ -70,10 +78,8 @@ api.interceptors.response.use(
         return api(originalRequest);
 
       } catch {
-        handleLogout();
         handleToast();
-        router.navigate(PATHS_MAPPING.HOME);
-        return Promise.reject(new Error("Session expirée, veuillez vous reconnecter"));
+        return redirectToLogin()
       }
     }
 
@@ -82,7 +88,7 @@ api.interceptors.response.use(
       error.response?.data?.message ??
       error.message ??
       "Une erreur est survenue, veuillez réessayer";
-
+    handleToast(message)
     return Promise.reject(new Error(message));
   },
 );
@@ -97,8 +103,8 @@ export interface RefreshData {
   refreshToken: string
 }
 
-function handleToast() {
-  toast(`Votre requette n'a pas pu aboutir`, {
+function handleToast(msg: string = "Votre requette n'a pas pu aboutir") {
+  toast(msg, {
       duration: 3000,
       position: 'top-right',
       icon: React.createElement(

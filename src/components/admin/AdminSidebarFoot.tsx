@@ -25,19 +25,15 @@ import {extractUserInitials} from "@/routing/utils/extractor";
 import {NavLink, useLocation, useNavigate} from "react-router";
 import {FULL_ADMIN_ROUTES_MAPPING, PATHS_MAPPING} from "@/routing/paths-mapping.ts";
 import {useMobileSidebar} from "@/hooks/useMobileSidebar.ts";
+import { useAuthStore } from "@/stores/authStore"
 
-export function AdminSidebarFoot({
-                                     user,
-                                 }: Readonly<{
-    user: {
-        name: string
-        email: string
-    }
-}>) {
+export function AdminSidebarFoot() {
     const {isMobile} = useSidebar()
     const {pathname} = useLocation()
     const navigate = useNavigate();
     const {collapseOnlyOnMobile} = useMobileSidebar()
+    const { user, clearAuth } = useAuthStore()
+    const userInitials = extractUserInitials(user?.firstName)
 
     return (
         <SidebarMenu>
@@ -68,11 +64,11 @@ export function AdminSidebarFoot({
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
                             <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarFallback className="rounded-lg">{extractUserInitials(user.name)}</AvatarFallback>
+                                <AvatarFallback className="rounded-lg">{userInitials}</AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-medium">{user.name}</span>
-                                <span className="truncate text-xs">{user.email}</span>
+                                <span className="truncate font-medium">{user?.firstName}</span>
+                                <span className="truncate text-xs">{user?.email}</span>
                             </div>
                             <HugeiconsIcon icon={UnfoldMoreIcon} strokeWidth={2} className="ml-auto size-4"/>
                         </SidebarMenuButton>
@@ -87,11 +83,11 @@ export function AdminSidebarFoot({
                             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                 <Avatar className="h-8 w-8 rounded-lg">
                                     <AvatarFallback
-                                        className="rounded-lg">{extractUserInitials(user.name)}</AvatarFallback>
+                                        className="rounded-lg">{userInitials}</AvatarFallback>
                                 </Avatar>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-medium">{user.name}</span>
-                                    <span className="truncate text-xs">{user.email}</span>
+                                    <span className="truncate font-medium">{user?.firstName}</span>
+                                    <span className="truncate text-xs">{user?.email}</span>
                                 </div>
                             </div>
                         </DropdownMenuLabel>
@@ -121,6 +117,7 @@ export function AdminSidebarFoot({
                         <DropdownMenuItem onSelect={(e) => {
                             // Sans le prevent default çà bug sur mobile
                             e.preventDefault();
+                            clearAuth();
                             navigate(PATHS_MAPPING.HOME);
                         }}>
                             <HugeiconsIcon icon={LogoutIcon} strokeWidth={2}/>

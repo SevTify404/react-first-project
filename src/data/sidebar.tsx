@@ -36,7 +36,3 @@ export const sidebarItems: Sidebaritem[] = [
         url: FULL_ADMIN_ROUTES_MAPPING.LOGS
     },
 ]
-export const userData = {
-    name: "BARRY Ali",
-    email: "maaaaa@souffrance.com",
-}

@@ -1,8 +1,8 @@
 import { CLIENT_ROUTES_MAPPING, FULL_ADMIN_ROUTES_MAPPING } from "@/routing/paths-mapping";
 import { router } from "@/routing/router";
 import { getMe, login } from "@/services/auth.service";
-import { useAuthStore } from "@/stores/auth.store";
-import { TickDouble03Icon } from "@hugeicons/core-free-icons";
+import { useAuthStore } from "@/stores/authStore";
+import { ConnectIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
@@ -31,8 +31,6 @@ export function useLogin() {
   });
 }
 
-
-
 // fonction toast 
 function handleToast() {
   toast(`Connexion réussie`, {
@@ -41,10 +39,7 @@ function handleToast() {
       icon: React.createElement(
         HugeiconsIcon, 
         { 
-          size: 50,
-          icon: TickDouble03Icon, 
-          primaryColor: "green", 
-          secondaryColor: "green"
+          icon: ConnectIcon,
         }
       )
   });

@@ -4,7 +4,8 @@ import { NavigationSheet } from "@/components/client/Navigation-sheet";
 import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart } from "lucide-react";
 import SearchInputDialog from "./SearchInputDialog";
-import LoginInputDialog from "./LoginInputDialog";
+
+import LoginFormOrUserInfo from "./LoginFormOrUserInfo";
 
 const Navbar = () => {
   return (
@@ -23,10 +24,12 @@ const Navbar = () => {
           <Button className="hidden sm:inline-flex">
             <ShoppingCart />
           </Button>
-          <Button className="hidden sm:inline-flex">
-            <LoginInputDialog />
-          </Button>
-
+          {/* On mets juste une condition ternaire ici, si l'user est connecté c'est 
+          son profil qui sera affiché dans la modal, sinon on afiche la modal de connexion */}
+          {/* Donc on va utiliser le hook du store en haut de la page pour vérifier tout çà */}
+          {/* {isAuthenticated ? <UserInfoDialog /> : <LoginInputDialog />} */}
+          <LoginFormOrUserInfo/>
+          
           {/* Mobile Menu */}
           <div className="md:hidden">
             <NavigationSheet />
