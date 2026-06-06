@@ -1,83 +1,83 @@
-import { z } from "zod";
+import {z} from "zod";
 
 
 export const loginSchemas = z.object(
-  {
-    username: z
-      .string({ message: "Le nom d'utilisateur doit être une chaîne de caractères." })
-      .min(3, { message: "Le nom d'utilisateur doit comporter au moins 3 caractères." }),
+    {
+        username: z
+            .string({message: "Le nom d'utilisateur doit être une chaîne de caractères."})
+            .min(3, {message: "Le nom d'utilisateur doit comporter au moins 3 caractères."}),
 
-    password: z
-      .string()
-      .min(6, { message: "Le mot de passe doit comporter au moins 6 caractères." }),
+        password: z
+            .string()
+            .min(6, {message: "Le mot de passe doit comporter au moins 6 caractères."}),
 
-    expiresInMins: z
-      .number({ message: "Le durée de la connexion doit être un nombre." })
-      .int({ message: "Le durée de la connexion doit etre un entier" })
-      .positive({ message: "Le durée de la connexion doit être un nombre positif." }),
-  },
-  {
-    message: "Les données de connexion sont invalides.",
-  }
+        expiresInMins: z
+            .number({message: "Le durée de la connexion doit être un nombre."})
+            .int({message: "Le durée de la connexion doit etre un entier"})
+            .positive({message: "Le durée de la connexion doit être un nombre positif."}),
+    },
+    {
+        message: "Les données de connexion sont invalides.",
+    }
 );
 
 
-
 export const loginResponseSchemas = z.object(
-  {
-    id: z
-      .number()
-      .int(),
+    {
+        id: z
+            .number()
+            .int(),
 
-    username: z
-      .string({ message: "Le nom d'utilisateur doit être une chaîne de caractères." }),
+        username: z
+            .string({message: "Le nom d'utilisateur doit être une chaîne de caractères."}),
 
-    email: z  
-      .email({ message: "Le email d'utilisateur doit être valide." }),
+        email: z
+            .email({message: "Le email d'utilisateur doit être valide."}),
 
-    firstName: z
-      .string({ message: "Le prénom doit être une chaîne de caractères." }),
+        firstName: z
+            .string({message: "Le prénom doit être une chaîne de caractères."}),
 
-    lastName: z
-      .string({ message: "Le nom de famille doit être une chaîne de caractères." }),
+        lastName: z
+            .string({message: "Le nom de famille doit être une chaîne de caractères."}),
 
-    gender: z
-      .enum(['female', 'male']),
+        gender: z
+            .enum(['female', 'male']),
 
-    image: z
-      .httpUrl({ message: "L'image doit être une chaîne de caractères." }),
+        image: z
+            .httpUrl({message: "L'image doit être une chaîne de caractères."}),
 
-    accessToken: z
-      .string(),
+        accessToken: z
+            .string(),
 
-    refreshToken: z
-      .string(),
-  }
+        refreshToken: z
+            .string(),
+    }
 );
 
 
 export const refreshTokenResponseSchemas = z.object(
-  {
-    accessToken: z
-      .string(),
-     
-    refreshToken: z
-      .string(),
-  }
+    {
+        accessToken: z
+            .string(),
+
+        refreshToken: z
+            .string(),
+    }
 );
 
 
 export const meResponseSchema = z.object({
-  id: z.number().int(),
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.string().email(),
-  username: z.string(),
-  image: z.string().url(),
-  role: z.enum(['admin', 'user', 'moderator']),
+    id: z.number().int(),
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.email(),
+    username: z.string(),
+    image: z.url(),
+    role: z.enum(['admin', 'user', 'moderator']),
+    gender: z.enum(['male', 'female']),
+    phone: z.string()
+
 }).strip(); // ignore tous les autres champs de la réponse
-
-
 
 
 // types inférés pour typscripte clairement

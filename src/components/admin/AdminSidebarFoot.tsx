@@ -26,13 +26,17 @@ import {NavLink, useLocation, useNavigate} from "react-router";
 import {FULL_ADMIN_ROUTES_MAPPING, PATHS_MAPPING} from "@/routing/paths-mapping.ts";
 import {useMobileSidebar} from "@/hooks/useMobileSidebar.ts";
 import { useAuthStore } from "@/stores/authStore"
+import {useUserAccount} from "@/hooks/react-queries-hooks/useUserAccount.ts";
 
 export function AdminSidebarFoot() {
     const {isMobile} = useSidebar()
     const {pathname} = useLocation()
     const navigate = useNavigate();
     const {collapseOnlyOnMobile} = useMobileSidebar()
-    const { user, clearAuth } = useAuthStore()
+    const { clearAuth } = useAuthStore()
+
+    const {user} = useUserAccount()
+
     const userInitials = extractUserInitials(user?.firstName)
 
     return (
