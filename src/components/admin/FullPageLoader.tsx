@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import {Spinner} from "@/components/ui/spinner.tsx";
+import Loader from "@/components/ui/Loader.tsx";
 
 export default function FullPageLoader() {
     return (
@@ -7,7 +7,7 @@ export default function FullPageLoader() {
             <div className="relative flex flex-col items-center gap-4 rounded-xl border bg-card p-6 shadow-lg md:gap-5">
 
                 <div className="relative flex items-center justify-center">
-                    <Spinner className="w-10 h-10" />
+                    <Loader/>
                     <Skeleton className="absolute h-8 w-8 rounded-full bg-primary/10 blur-xl animate-pulse" />
                 </div>
 

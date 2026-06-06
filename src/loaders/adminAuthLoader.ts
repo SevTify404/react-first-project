@@ -7,6 +7,7 @@ import { redirect } from "react-router";
 import {queryClient} from "@/configs/react-query/configs.ts";
 import {meQueryOptions} from "@/configs/react-query/querysOptions.ts";
 import {useAuthStore} from "@/stores/authStore.ts";
+import {sleep} from "@/lib/utils.ts";
 /**
  * Loader de protection des routes admin, vérifie que l'utilisateur est connecté et a le role admin
  * @returns les infos du user connecté (me) pour éviter un nouvel appel api dans les composants enfants
@@ -22,6 +23,9 @@ export default async function adminAuthLoader(): Promise<MeResponse> {
     triggerUnauthorizedToast()
     throw redirect(PATHS_MAPPING.HOME);
   }
+
+  // Juste pour test un rendu
+  await sleep(5);
 
   const user = await queryClient.ensureQueryData(meQueryOptions)
 
