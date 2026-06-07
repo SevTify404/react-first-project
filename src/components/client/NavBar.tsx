@@ -24,12 +24,7 @@ const Navbar = () => {
           <Button className="hidden sm:inline-flex">
             <ShoppingCart />
           </Button>
-          {/* On mets juste une condition ternaire ici, si l'user est connecté c'est 
-          son profil qui sera affiché dans la modal, sinon on afiche la modal de connexion */}
-          {/* Donc on va utiliser le hook du store en haut de la page pour vérifier tout çà */}
-          {/* {isAuthenticated ? <UserInfoDialog /> : <LoginInputDialog />} */}
           <LoginFormOrUserInfo/>
-          
           {/* Mobile Menu */}
           <div className="md:hidden">
             <NavigationSheet />
