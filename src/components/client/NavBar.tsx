@@ -1,6 +1,6 @@
 import { Logo } from "@/components/client/Logo";
 import { NavMenu } from "@/components/client/NavMenu";
-import { NavigationSheet } from "@/components/client/Navigation-sheet";
+import { NavigationSheet } from "@/components/client/NavigationSheet.tsx";
 import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart } from "lucide-react";
 import SearchInputDialog from "./SearchInputDialog";

@@ -4,7 +4,7 @@ import {useNavigation} from "react-router";
 import FullPageLoader from "@/components/admin/FullPageLoader.tsx";
 
 /**
- * @description Composant pour envelopper les layouts, fournissant des contexts partagés
+ * @description Composant pour envelopper les layouts, fournissant des contexts et des comportements partagés
  * @param children - Les éléments enfants à rendre à l'intérieur du wrapper
  * @returns Un composant React qui enveloppe les enfants avec les providers nécessaires
  * @example
@@ -19,7 +19,7 @@ import FullPageLoader from "@/components/admin/FullPageLoader.tsx";
 function LayoutWrapper({children}: Readonly<{ children: ReactNode }>) {
     const navigation = useNavigation();
     const isNavigating = navigation.state === "loading";
-    
+
     return (
         <TooltipProvider>
             {isNavigating && <FullPageLoader/>}

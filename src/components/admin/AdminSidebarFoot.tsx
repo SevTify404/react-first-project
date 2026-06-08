@@ -34,10 +34,11 @@ export function AdminSidebarFoot() {
     const navigate = useNavigate();
     const {collapseOnlyOnMobile} = useMobileSidebar()
     const { clearAuth } = useAuthStore()
-
     const {user} = useUserAccount()
 
-    const userInitials = extractUserInitials(user?.firstName)
+    const userFullname = `${user?.firstName} ${user?.lastName}`;
+
+    const userInitials = extractUserInitials(userFullname);
 
     return (
         <SidebarMenu>
@@ -71,7 +72,7 @@ export function AdminSidebarFoot() {
                                 <AvatarFallback className="rounded-lg">{userInitials}</AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-medium">{user?.firstName}</span>
+                                <span className="truncate font-medium">{userFullname}</span>
                                 <span className="truncate text-xs">{user?.email}</span>
                             </div>
                             <HugeiconsIcon icon={UnfoldMoreIcon} strokeWidth={2} className="ml-auto size-4"/>
