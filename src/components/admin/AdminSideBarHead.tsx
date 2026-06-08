@@ -26,7 +26,7 @@ export function AdminSideBarHead() {
                 {isAnimating && (
                     <div className={`mt-2 ${state === "expanded" ? "animate-fade-in-slide-up" : "animate-fade-out-slide-down"}`}>
                         <span
-                            className="text-accent-foreground font-medium font-zen">
+                            className="text-accent-foreground font-zen">
                             MarketFlow Ops
                         </span>
                     </div>
