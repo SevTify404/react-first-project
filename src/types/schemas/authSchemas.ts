@@ -76,7 +76,6 @@ export const meResponseSchema = z.object({
     role: z.enum(['admin', 'user', 'moderator']),
     gender: z.enum(['male', 'female']),
     phone: z.string()
-
 }).strip(); // ignore tous les autres champs de la réponse
 
 

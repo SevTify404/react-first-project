@@ -24,8 +24,8 @@ export default async function adminAuthLoader(): Promise<MeResponse> {
     throw redirect(PATHS_MAPPING.HOME);
   }
 
-  // Juste pour test un rendu
-  await sleep(5);
+  // Juste pour test le rendu
+  await sleep(1);
 
   const user = await queryClient.ensureQueryData(meQueryOptions)
 

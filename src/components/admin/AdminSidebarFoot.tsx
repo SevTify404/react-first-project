@@ -14,7 +14,6 @@ import {
     ArrowRight01Icon,
     CheckmarkBadgeIcon,
     CreditCardIcon,
-    LogoutIcon,
     NotificationIcon,
     SparklesIcon,
     UnfoldMoreIcon
@@ -22,18 +21,16 @@ import {
 import {Separator} from "@/components/ui/separator.tsx";
 import {Settings} from "lucide-react";
 import {extractUserInitials} from "@/routing/utils/extractor";
-import {NavLink, useLocation, useNavigate} from "react-router";
-import {FULL_ADMIN_ROUTES_MAPPING, PATHS_MAPPING} from "@/routing/paths-mapping.ts";
+import {NavLink, useLocation} from "react-router";
+import {FULL_ADMIN_ROUTES_MAPPING} from "@/routing/paths-mapping.ts";
 import {useMobileSidebar} from "@/hooks/useMobileSidebar.ts";
-import { useAuthStore } from "@/stores/authStore"
 import {useUserAccount} from "@/hooks/react-queries-hooks/useUserAccount.ts";
+import DisconnectAlertDialog from "@/components/shared/DisconnectAlertDialog.tsx";
 
 export function AdminSidebarFoot() {
     const {isMobile} = useSidebar()
     const {pathname} = useLocation()
-    const navigate = useNavigate();
     const {collapseOnlyOnMobile} = useMobileSidebar()
-    const { clearAuth } = useAuthStore()
     const {user} = useUserAccount()
 
     const userFullname = `${user?.firstName} ${user?.lastName}`;
@@ -119,15 +116,7 @@ export function AdminSidebarFoot() {
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem onSelect={(e) => {
-                            // Sans le prevent default çà bug sur mobile
-                            e.preventDefault();
-                            clearAuth();
-                            navigate(PATHS_MAPPING.HOME);
-                        }}>
-                            <HugeiconsIcon icon={LogoutIcon} strokeWidth={2}/>
-                            Déconnexion
-                        </DropdownMenuItem>
+                        <DisconnectAlertDialog buttonFullWidth/>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </SidebarMenuItem>

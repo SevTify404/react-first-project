@@ -10,11 +10,10 @@ import {
     CardHeader,
 } from "@/components/ui/card.tsx";
 import {Badge} from "@/components/ui/badge.tsx";
-import {Button} from "@/components/ui/button.tsx";
-import {LogOut} from "lucide-react";
+import DisconnectAlertDialog from "@/components/shared/DisconnectAlertDialog.tsx";
 
 export default function UserInfo() {
-    const {user, logout} = useUserAccount();
+    const {user} = useUserAccount();
 
 
     const userFullname = `${user?.firstName} ${user?.lastName}`;
@@ -32,12 +31,7 @@ export default function UserInfo() {
             <Separator className="my-2"/>
             <ProfileInfo userInfos={user as MeResponse}/>
             <Separator className="my-2"/>
-            <Button variant="destructive"
-                onClick={logout}
-            >
-                <LogOut />
-                Se Déconnecter
-            </Button>
+            <DisconnectAlertDialog buttonFullWidth/>
         </div>
     )
 }
@@ -62,7 +56,7 @@ const profilInfoCards = [
 ]
 function ProfileInfo({userInfos} : Readonly<{ userInfos: MeResponse }>) {
     return (
-        <div className="grid grid-cols-2 gap-3 items-center justify-center w-full">
+        <div className="grid grid-cols-2 gap-3 items-center justify-center my-2 w-full ">
             {profilInfoCards.map((card) => (
                 <Card key={card.title} className="w-full">
                     <CardHeader className="font-medium text-muted-foreground">
