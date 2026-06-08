@@ -9,9 +9,13 @@ import {
     CardContent,
     CardHeader,
 } from "@/components/ui/card.tsx";
+import {Badge} from "@/components/ui/badge.tsx";
+import {Button} from "@/components/ui/button.tsx";
+import {LogOut} from "lucide-react";
 
 export default function UserInfo() {
-    const {user} = useUserAccount();
+    const {user, logout} = useUserAccount();
+
 
     const userFullname = `${user?.firstName} ${user?.lastName}`;
     const userInitials = extractUserInitials(userFullname);
@@ -22,10 +26,18 @@ export default function UserInfo() {
                 <AvatarFallback>{userInitials}</AvatarFallback>
             </Avatar>
             <span className="font-medium text-2xl mt-1">{userFullname}</span>
+            <Badge variant="outline" className="my-1">{user?.role.toUpperCase()}</Badge>
             <span className="text-sm text-muted-foreground mb-1">{user?.email}</span>
             <AnimatedTabs tabs={["Profile", "Work", "Billing"]}/>
             <Separator className="my-2"/>
             <ProfileInfo userInfos={user as MeResponse}/>
+            <Separator className="my-2"/>
+            <Button variant="destructive"
+                onClick={logout}
+            >
+                <LogOut />
+                Se Déconnecter
+            </Button>
         </div>
     )
 }
@@ -33,19 +45,19 @@ export default function UserInfo() {
 const profilInfoCards = [
     {
         title: "Nom Complet",
-        content: (userInfos: MeResponse) => `${userInfos.firstName} ${userInfos.lastName}`
+        content: (userInfos: MeResponse) => `${userInfos?.firstName} ${userInfos?.lastName}`
     },
     {
         title: "Email",
-        content: (userInfos: MeResponse) => userInfos.email
+        content: (userInfos: MeResponse) => userInfos?.email
     },
     {
         title: "Rôle",
-        content: (userInfos: MeResponse) => userInfos.role
+        content: (userInfos: MeResponse) => userInfos?.role
     },
     {
         title: "Genre",
-        content: (userInfos: MeResponse) => userInfos.gender
+        content: (userInfos: MeResponse) => userInfos?.gender
     }
 ]
 function ProfileInfo({userInfos} : Readonly<{ userInfos: MeResponse }>) {

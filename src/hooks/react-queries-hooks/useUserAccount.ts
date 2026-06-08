@@ -4,7 +4,7 @@ import {useQuery} from '@tanstack/react-query';
 import {meQueryOptions} from "@/configs/react-query/querysOptions.ts";
 
 export function useUserAccount() {
-    const {isAuthenticated} = useAuthStore();
+    const {isAuthenticated, clearAuth} = useAuthStore();
 
     const query = useQuery({
         ...meQueryOptions,
@@ -17,5 +17,6 @@ export function useUserAccount() {
         isAuthenticated: isAuthenticated && !!query.data,
         isFetching: query.isFetching, // Utile si on veux montrer un spinner discret lors du background refresh
         error: query.error,
+        logout: clearAuth, // Expose la fonction de logout pour les composants qui utilisent ce hook
     };
 }
