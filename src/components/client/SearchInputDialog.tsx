@@ -7,23 +7,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Search } from "lucide-react";
 
-const products = [
-  {
-    src: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png",
-    fallback: "CP",
-    name: "Cristofer Press",
-    price: 40,
-  },
-  // je vais custome après en fonction des shémas de validation qu'on va créer
-  // ou soit on passe carrément la lste des produits en props
-];
 
 const SearchInputDialog = () => {
 
-  const isMobile = useIsMobile();
 
   return (
     <Dialog>

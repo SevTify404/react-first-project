@@ -14,6 +14,9 @@ importers:
       '@fontsource-variable/ibm-plex-sans':
         specifier: ^5.2.8
         version: 5.2.8
+      '@fontsource/zen-dots':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@hookform/resolvers':
         specifier: ^5.4.0
         version: 5.4.0(react-hook-form@7.76.1(react@19.2.6))
@@ -909,6 +912,9 @@ packages:
 
   '@fontsource-variable/ibm-plex-sans@5.2.8':
     resolution: {integrity: sha512-n5PF2iFa0CZT0QYTPzxvZ39opC9LnU0zdoRccoADbs+Dtsd+lbXOZF7RNuIPHcQX1dKjF63sxnRImQIB5eD0Ag==}
+
+  '@fontsource/zen-dots@5.2.8':
+    resolution: {integrity: sha512-UxMn/kKdA0vPFnaYC9FYpCVqrrVFXU2S9ga0m+d+VTFTPBfOZT4WI47Ws4EMIkp9KUr9jk9YEiL7hIHpk3PSow==}
 
   '@hono/node-server@1.19.14':
     resolution: {integrity: sha512-GwtvgtXxnWsucXvbQXkRgqksiH2Qed37H9xHZocE5sA3N8O8O8/8FA3uclQXxXVzc9XBZuEOMK7+r02FmSpHtw==}
@@ -8093,6 +8099,8 @@ snapshots:
   '@fontsource-variable/geist-mono@5.2.7': {}
 
   '@fontsource-variable/ibm-plex-sans@5.2.8': {}
+
+  '@fontsource/zen-dots@5.2.8': {}
 
   '@hono/node-server@1.19.14(hono@4.12.19)':
     dependencies:

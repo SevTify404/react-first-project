@@ -66,6 +66,34 @@ export const refreshTokenResponseSchemas = z.object(
 );
 
 
+const addressSchema = z.object({
+    address: z.string().optional(),
+    city: z.string().optional(),
+    state: z.string().optional(),
+    stateCode: z.string().optional(),
+    postalCode: z.string().optional(),
+    coordinates: z.object({
+        lat: z.number(),
+        lng: z.number()
+    }).optional(),
+    country: z.string().optional()
+});
+
+const bankSchema = z.object({
+    cardExpire: z.string().optional(),
+    cardNumber: z.string().optional(),
+    cardType: z.string().optional(),
+    currency: z.string().optional(),
+    iban: z.string().optional()
+});
+
+const companySchema = z.object({
+    department: z.string().optional(),
+    name: z.string().optional(),
+    title: z.string().optional(),
+    address: addressSchema.optional()
+});
+
 export const meResponseSchema = z.object({
     id: z.number().int(),
     firstName: z.string(),
@@ -75,7 +103,10 @@ export const meResponseSchema = z.object({
     image: z.url(),
     role: z.enum(['admin', 'user', 'moderator']),
     gender: z.enum(['male', 'female']),
-    phone: z.string()
+    phone: z.string(),
+    address: addressSchema.optional(),
+    bank: bankSchema.optional(),
+    company: companySchema.optional()
 }).strip(); // ignore tous les autres champs de la réponse
 
 

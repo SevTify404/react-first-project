@@ -5,22 +5,37 @@ import { cn } from "@/lib/utils";
 type AnimatedTabsProps = {
   tabs: Array<string>;
   variant?: "default" | "underline";
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
 };
 
-const AnimatedTabs = ({ tabs, variant = "default" }: AnimatedTabsProps) => {
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+const AnimatedTabs = ({
+  tabs,
+  variant = "default",
+  activeTab: controlledActiveTab,
+  onTabChange,
+}: AnimatedTabsProps) => {
+  const [internalActiveTab, setInternalActiveTab] = useState(tabs[0]);
+  const activeTab = controlledActiveTab ?? internalActiveTab;
+
+  const handleTabClick = (tab: string) => {
+    if (controlledActiveTab === undefined) {
+      setInternalActiveTab(tab);
+    }
+    onTabChange?.(tab);
+  };
 
   if (variant === "underline") {
     return (
       <div className="relative flex items-center border-b border-border">
-        {tabs.map((tab, index) => {
+        {tabs.map((tab) => {
           const isActive = activeTab === tab;
 
           return (
             <button
-              key={index}
+              key={tab}
               type="button"
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabClick(tab)}
               className={cn(
                 "relative flex h-10 items-center px-4 text-sm font-medium transition-colors duration-200",
                 isActive
@@ -50,14 +65,14 @@ const AnimatedTabs = ({ tabs, variant = "default" }: AnimatedTabsProps) => {
 
   return (
     <div className="relative mx-auto flex w-fit items-center rounded-full bg-background p-1">
-      {tabs.map((tab, index) => {
+      {tabs.map((tab) => {
         const isActive = activeTab === tab;
 
         return (
           <button
-            key={index}
+            key={tab}
             type="button"
-            onClick={() => setActiveTab(tab)}
+            onClick={() => handleTabClick(tab)}
             className={cn(
               "relative hover:bg-muted flex h-8 items-center rounded-full px-3 text-sm font-medium transition-colors duration-200",
               isActive

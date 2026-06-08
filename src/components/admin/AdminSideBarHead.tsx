@@ -19,14 +19,14 @@ export function AdminSideBarHead() {
                 onClick={toggleSidebar}>
                 <div className="flex justify-items-center items-center ">
                     <img src={onlineshopping} alt="Online Shopping" width={70} height={70}/>
-                    <span className="text-primary text-3xl ml-3 overflow-hidden font-bold">
+                    <span className="text-primary text-3xl ml-3 overflow-hidden font-black">
                         Admin Panel
                     </span>
                 </div>
                 {isAnimating && (
                     <div className={`mt-2 ${state === "expanded" ? "animate-fade-in-slide-up" : "animate-fade-out-slide-down"}`}>
                         <span
-                            className="text-accent-foreground font-medium">
+                            className="text-accent-foreground font-medium font-zen">
                             MarketFlow Ops
                         </span>
                     </div>
