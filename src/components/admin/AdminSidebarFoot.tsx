@@ -11,7 +11,6 @@ import {
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@/components/ui/sidebar.tsx"
 import {HugeiconsIcon} from "@hugeicons/react"
 import {
-    ArrowRight01Icon,
     CheckmarkBadgeIcon,
     CreditCardIcon,
     NotificationIcon,
@@ -19,13 +18,14 @@ import {
     UnfoldMoreIcon
 } from "@hugeicons/core-free-icons"
 import {Separator} from "@/components/ui/separator.tsx";
-import {Settings} from "lucide-react";
 import {extractUserInitials} from "@/routing/utils/extractor";
 import {NavLink, useLocation} from "react-router";
 import {FULL_ADMIN_ROUTES_MAPPING} from "@/routing/paths-mapping.ts";
 import {useMobileSidebar} from "@/hooks/useMobileSidebar.ts";
 import {useUserAccount} from "@/hooks/react-queries-hooks/useUserAccount.ts";
 import DisconnectAlertDialog from "@/components/shared/DisconnectAlertDialog.tsx";
+import AdminSidebarNavLinkContent from "@/components/admin/AdminSidebarNavLinkContent.tsx";
+import {parametreItem} from "@/data/sidebar.tsx";
 
 export function AdminSidebarFoot() {
     const {isMobile} = useSidebar()
@@ -42,18 +42,12 @@ export function AdminSidebarFoot() {
             <SidebarMenuItem className="flex justify-center">
                 <SidebarMenuButton
                     tooltip="Paramètres" isActive={pathname === FULL_ADMIN_ROUTES_MAPPING.SETTINGS} asChild>
-                    <NavLink
-                        to={FULL_ADMIN_ROUTES_MAPPING.SETTINGS}
-                        className="w-full"
-                        onClick={collapseOnlyOnMobile}
+                    <NavLink to={parametreItem.url}
+                             onClick={collapseOnlyOnMobile}
                     >
-                        <div className="flex w-full ">
-                            <Settings/>
-                            <span className="ml-2">Paramètres</span>
-                            <HugeiconsIcon
-                                icon={ArrowRight01Icon}
-                                strokeWidth={2}
-                                className="ml-auto"/></div>
+                        {({isActive, isPending}) => (
+                            <AdminSidebarNavLinkContent isActive={isActive} isPending={isPending} item={parametreItem}/>
+                        )}
                     </NavLink>
                 </SidebarMenuButton>
             </SidebarMenuItem>

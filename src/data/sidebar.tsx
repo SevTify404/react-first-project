@@ -8,6 +8,7 @@ import {
     UserGroup03Icon
 } from "@hugeicons/core-free-icons";
 import {FULL_ADMIN_ROUTES_MAPPING} from "@/routing/paths-mapping.ts";
+import {Settings} from "lucide-react";
 
 export const sidebarItems: Sidebaritem[] = [
     {
@@ -36,3 +37,8 @@ export const sidebarItems: Sidebaritem[] = [
         url: FULL_ADMIN_ROUTES_MAPPING.LOGS
     },
 ]
+export const parametreItem: Sidebaritem = {
+    title: "Paramètres",
+    icon: <Settings/>,
+    url: FULL_ADMIN_ROUTES_MAPPING.SETTINGS
+}
