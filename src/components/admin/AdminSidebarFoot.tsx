@@ -11,47 +11,43 @@ import {
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar,} from "@/components/ui/sidebar.tsx"
 import {HugeiconsIcon} from "@hugeicons/react"
 import {
-    ArrowRight01Icon,
     CheckmarkBadgeIcon,
     CreditCardIcon,
-    LogoutIcon,
     NotificationIcon,
     SparklesIcon,
     UnfoldMoreIcon
 } from "@hugeicons/core-free-icons"
 import {Separator} from "@/components/ui/separator.tsx";
-import {Settings} from "lucide-react";
 import {extractUserInitials} from "@/routing/utils/extractor";
-import {NavLink, useLocation, useNavigate} from "react-router";
-import {FULL_ADMIN_ROUTES_MAPPING, PATHS_MAPPING} from "@/routing/paths-mapping.ts";
+import {NavLink, useLocation} from "react-router";
+import {FULL_ADMIN_ROUTES_MAPPING} from "@/routing/paths-mapping.ts";
 import {useMobileSidebar} from "@/hooks/useMobileSidebar.ts";
-import { useAuthStore } from "@/stores/authStore"
+import {useUserAccount} from "@/hooks/react-queries-hooks/useUserAccount.ts";
+import DisconnectAlertDialog from "@/components/shared/DisconnectAlertDialog.tsx";
+import AdminSidebarNavLinkContent from "@/components/admin/AdminSidebarNavLinkContent.tsx";
+import {parametreItem} from "@/data/sidebar.tsx";
 
 export function AdminSidebarFoot() {
     const {isMobile} = useSidebar()
     const {pathname} = useLocation()
-    const navigate = useNavigate();
     const {collapseOnlyOnMobile} = useMobileSidebar()
-    const { user, clearAuth } = useAuthStore()
-    const userInitials = extractUserInitials(user?.firstName)
+    const {user} = useUserAccount()
+
+    const userFullname = `${user?.firstName} ${user?.lastName}`;
+
+    const userInitials = extractUserInitials(userFullname);
 
     return (
         <SidebarMenu>
             <SidebarMenuItem className="flex justify-center">
                 <SidebarMenuButton
                     tooltip="Paramètres" isActive={pathname === FULL_ADMIN_ROUTES_MAPPING.SETTINGS} asChild>
-                    <NavLink
-                        to={FULL_ADMIN_ROUTES_MAPPING.SETTINGS}
-                        className="w-full"
-                        onClick={collapseOnlyOnMobile}
+                    <NavLink to={parametreItem.url}
+                             onClick={collapseOnlyOnMobile}
                     >
-                        <div className="flex w-full ">
-                            <Settings/>
-                            <span className="ml-2">Paramètres</span>
-                            <HugeiconsIcon
-                                icon={ArrowRight01Icon}
-                                strokeWidth={2}
-                                className="ml-auto"/></div>
+                        {({isActive, isPending}) => (
+                            <AdminSidebarNavLinkContent isActive={isActive} isPending={isPending} item={parametreItem}/>
+                        )}
                     </NavLink>
                 </SidebarMenuButton>
             </SidebarMenuItem>
@@ -67,7 +63,7 @@ export function AdminSidebarFoot() {
                                 <AvatarFallback className="rounded-lg">{userInitials}</AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-medium">{user?.firstName}</span>
+                                <span className="truncate font-medium">{userFullname}</span>
                                 <span className="truncate text-xs">{user?.email}</span>
                             </div>
                             <HugeiconsIcon icon={UnfoldMoreIcon} strokeWidth={2} className="ml-auto size-4"/>
@@ -114,15 +110,7 @@ export function AdminSidebarFoot() {
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
-                        <DropdownMenuItem onSelect={(e) => {
-                            // Sans le prevent default çà bug sur mobile
-                            e.preventDefault();
-                            clearAuth();
-                            navigate(PATHS_MAPPING.HOME);
-                        }}>
-                            <HugeiconsIcon icon={LogoutIcon} strokeWidth={2}/>
-                            Déconnexion
-                        </DropdownMenuItem>
+                        <DisconnectAlertDialog buttonFullWidth/>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </SidebarMenuItem>

@@ -5,8 +5,9 @@ import AdminLayout from "@/layouts/AdminLayout.tsx";
 import ClientLayout from "@/layouts/ClientLayout.tsx";
 import Placeholder from "@/pages/Placeholder.tsx";
 import { PATHS_MAPPING } from "./paths-mapping.ts";
-import { LoaderIds } from "@/services/constants/routerConstants.ts";
+import { LoaderIds } from "@/constants/routerConstants.ts";
 import adminAuthLoader from "@/loaders/adminAuthLoader.ts";
+import FullPageLoader from "@/components/admin/FullPageLoader.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
   },
   {
     id: LoaderIds.ADMIN_PROTECTED_ROUTES,
+    HydrateFallback: FullPageLoader,
     loader: adminAuthLoader,
     path: PATHS_MAPPING.ADMIN,
     Component: AdminLayout,

@@ -14,7 +14,7 @@ export default function UserInfoDialog() {
           <CircleUserRound />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg bg-accent">
         <DialogHeader>
           <DialogTitle className="text-xl">Mon compte</DialogTitle>
         </DialogHeader>

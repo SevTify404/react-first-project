@@ -1,7 +1,7 @@
 import { CLIENT_ROUTES_MAPPING } from "@/routing/paths-mapping";
 import axios from "axios";
 import { router } from "../routing/router";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants/api.constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/apiConstants.ts";
 import toast from "react-hot-toast";
 import { SettingError03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -57,7 +57,7 @@ api.interceptors.response.use(
           refreshToken: currentRefreshToken,
         });
 
-        if (!data || !data.accessToken || !data.refreshToken) {
+        if (!data?.accessToken || !data.refreshToken) {
           return redirectToLogin();
         }
 
@@ -89,7 +89,7 @@ api.interceptors.response.use(
       error.message ??
       "Une erreur est survenue, veuillez réessayer";
     handleToast(message)
-    return Promise.reject(new Error(message));
+    throw new Error(message);
   },
 );
 

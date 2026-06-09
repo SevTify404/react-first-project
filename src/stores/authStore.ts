@@ -1,25 +1,20 @@
 import {
-  ACCESS_TOKEN,
-  REFRESH_TOKEN,
   removeCookie,
   setCookie,
 } from "@/lib/cookie";
 import type {
   LoginResponseData,
-  MeResponse,
 } from "@/types/schemas/authSchemas";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import {ACCESS_TOKEN, REFRESH_TOKEN} from "@/constants/apiConstants.ts";
 
 
 
 interface AuthStore {
-  user: MeResponse | null;
   isAuthenticated: boolean;
-
   setAuth: (data: LoginResponseData) => void;
   clearAuth: () => void;
-  setMe: (user: MeResponse) => void;
 }
 
 
@@ -27,7 +22,6 @@ interface AuthStore {
 export const useAuthStore = create<AuthStore>()(
   persist(
     (set) => ({
-      user: null,
       isAuthenticated: false,
 
       setAuth: (data) => {
@@ -37,13 +31,10 @@ export const useAuthStore = create<AuthStore>()(
         set({ isAuthenticated: true });
       },
 
-      // Appelé après le fetch /auth/me
-      setMe: (user) => set({ user }),
-
       clearAuth: () => {
         removeCookie(ACCESS_TOKEN);
         removeCookie(REFRESH_TOKEN);
-        set({ user: null, isAuthenticated: false });
+        set({isAuthenticated: false });
       },
     }),
     { name: 'auth' }

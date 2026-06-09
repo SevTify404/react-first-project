@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon, LockIcon, UserIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import {Spinner} from "@/components/ui/spinner.tsx";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -93,6 +94,7 @@ export default function LoginForm() {
 
         <Button className="w-full" type="submit" disabled={!canSubmit}>
           {isPending ? "Connexion..." : "Se connecter"}
+          {isPending && <Spinner />}
         </Button>
       </div>
       <div className="flex justify-center basis-1/4">

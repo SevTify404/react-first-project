@@ -1,7 +1,3 @@
-// Noms des cookies centralisés 
-export const ACCESS_TOKEN  = 'access_token';
-export const REFRESH_TOKEN = 'refresh_token';
-
 interface CookieOptions {
   expires?: number; // en jours
   secure?: boolean;
@@ -10,7 +6,7 @@ interface CookieOptions {
 }
 
 function buildCookieString(name: string, value: string, options: CookieOptions = {}): string {
-  let cookie = `${name}=${value}`;
+  let cookie = `${name}=${encodeURIComponent(value)}`;
 
   if (options.expires) {
     const date = new Date();
@@ -19,8 +15,17 @@ function buildCookieString(name: string, value: string, options: CookieOptions =
   }
 
   cookie += `; path=${options.path ?? '/'}`;
-  if (options.secure)                cookie += '; Secure';
-  if (options.sameSite)              cookie += `; SameSite=${options.sameSite}`;
+  // On force 'Secure' uniquement si on est en HTTPS (et pas sur localhost en HTTP)
+  const isHttps = typeof globalThis.window !== 'undefined' && globalThis.location.protocol === 'https:';
+  if (options.secure && isHttps) {
+    cookie += '; Secure';
+  }
+
+  // Si SameSite=Strict est demandé mais qu'on est en HTTP local, certains navigateurs boudent.
+  // On peut laisser SameSite=Lax ou Strict en local tant que 'Secure' n'est pas forcé en HTTP.
+  if (options.sameSite) {
+    cookie += `; SameSite=${options.sameSite}`;
+  }
 
   return cookie;
 }
@@ -30,10 +35,12 @@ export function setCookie(name: string, value: string, options: CookieOptions = 
 }
 
 export function getCookie(name: string): string | undefined {
-  return document.cookie
-    .split('; ')
-    .find(row => row.startsWith(`${name}=`))
-    ?.split('=')[1];
+  const value = document.cookie
+      .split('; ')
+      .find(row => row.startsWith(`${name}=`))
+      ?.split('=')[1];
+
+  return value ? decodeURIComponent(value) : undefined;
 }
 
 export function removeCookie(name: string): void {

@@ -1,10 +1,13 @@
 import { PATHS_MAPPING } from "@/routing/paths-mapping";
-import { useAuthStore } from "@/stores/authStore";
 import type { MeResponse } from "@/types/schemas/authSchemas";
 import { CircleXIcon } from "lucide-react";
 import React from "react";
 import toast from "react-hot-toast";
 import { redirect } from "react-router";
+import {queryClient} from "@/configs/react-query/configs.ts";
+import {meQueryOptions} from "@/configs/react-query/querysOptions.ts";
+import {useAuthStore} from "@/stores/authStore.ts";
+import {sleep} from "@/lib/utils.ts";
 /**
  * Loader de protection des routes admin, vérifie que l'utilisateur est connecté et a le role admin
  * @returns les infos du user connecté (me) pour éviter un nouvel appel api dans les composants enfants
@@ -14,19 +17,32 @@ import { redirect } from "react-router";
  * @note en cas d'erreur (pas admin ou pas connecté), on affiche un toast d'erreur avant de rediriger
  */
 export default async function adminAuthLoader(): Promise<MeResponse> {
-  const user = useAuthStore.getState().user;
-  console.log(user);
+  const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
-  if (!user || user.role !== "admin") {
-    toast("Tu n'es pas autorisé petit", {
-      duration: 5000,
-      position: "top-right",
-      icon: React.createElement(CircleXIcon)
-    });
+  if (!isAuthenticated) {
+    triggerUnauthorizedToast()
+    throw redirect(PATHS_MAPPING.HOME);
+  }
+
+  // Juste pour test le rendu
+  await sleep(1);
+
+  const user = await queryClient.ensureQueryData(meQueryOptions)
+
+  if (user?.role !== "admin") {
+    triggerUnauthorizedToast()
     throw redirect(PATHS_MAPPING.HOME);
   }
 
   // Pour l'instant on ne fait rien avec ce retour,
   //  mais bon on sait jamais
   return user;
+}
+
+function triggerUnauthorizedToast() {
+  toast("Tu n'es pas autorisé petit", {
+    duration: 5000,
+    position: "top-right",
+    icon: React.createElement(CircleXIcon)
+  });
 }

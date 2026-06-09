@@ -4,7 +4,7 @@ import {
   type MeResponse,
   type RefreshTokenResponseData,
 } from "@/types/schemas/authSchemas";
-import { api } from "./api.service";
+import { api } from "./apiService.ts";
 
 const AUTH_PATH_MAPPING = {
   LOGIN: "/auth/login",
