@@ -1,17 +1,18 @@
-import {Separator} from "@/components/ui/separator.tsx";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
-import {useUserAccount} from "@/hooks/react-queries-hooks/useUserAccount.ts";
-import {extractUserInitials} from "@/routing/utils/extractor.ts";
-import type {MeResponse} from "@/types/schemas/authSchemas.ts";
-import {Badge} from "@/components/ui/badge.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar.tsx";
+import { useUserAccount } from "@/hooks/react-queries-hooks/useUserAccount.ts";
+import { extractUserInitials } from "@/routing/utils/extractor.ts";
+import type { MeResponse } from "@/types/schemas/authSchemas.ts";
+import { Badge } from "@/components/ui/badge.tsx";
 import DisconnectAlertDialog from "@/components/shared/DisconnectAlertDialog.tsx";
-import {Info} from "lucide-react";
-import {useMemo, useState} from "react";
-import {Spinner} from "@/components/ui/spinner.tsx";
+import { Info } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Spinner } from "@/components/ui/spinner.tsx";
 import AnimatedTabs from "@/components/forgeui/AnimatedTabs.tsx";
-import {AnimatePresence, motion} from "motion/react";
-import type {InfoScope} from "@/types/userInfoTypes.ts";
-import {displayedInfo} from "@/data/userInfo.ts";
+import { AnimatePresence, motion } from "motion/react";
+import type { InfoScope } from "@/types/userInfoTypes.ts";
+import { displayedInfo } from "@/data/userInfo.ts";
+import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area.tsx";
 
 const Tabs = {
     PROFILE: displayedInfo.PROFILE,
@@ -20,7 +21,7 @@ const Tabs = {
 }
 
 export default function UserInfo() {
-    const {user, isLoading} = useUserAccount();
+    const { user, isLoading } = useUserAccount();
 
     const [activeTab, setActiveTab] = useState<InfoScope>(Tabs.PROFILE);
 
@@ -42,7 +43,7 @@ export default function UserInfo() {
     if (isLoading || !user) {
         return (
             <div className="flex flex-col items-center justify-center py-8 min-h-75 w-full">
-                <Spinner className="size-8 text-primary"/>
+                <Spinner className="size-8 text-primary" />
                 {/*<Loader/>*/}
                 <span className="text-muted-foreground mt-4 text-sm font-medium">
                     Chargement des informations...
@@ -52,9 +53,9 @@ export default function UserInfo() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center w-full">
+        <div className="flex flex-col items-center justify-center w-full flex-1 min-h-0">
             <Avatar size="lg">
-                <AvatarImage src={user?.image} alt={userFullname}/>
+                <AvatarImage src={user?.image} alt={userFullname} />
                 <AvatarFallback>{userInitials}</AvatarFallback>
             </Avatar>
             <span className="font-medium text-2xl mt-1">{userFullname}</span>
@@ -65,31 +66,34 @@ export default function UserInfo() {
                 activeTab={activeTab.title}
                 onTabChange={handleTabChange}
             />
-            <Separator className="my-2"/>
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={activeTab.title}
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    exit={{opacity: 0}}
-                    transition={{duration: 0.25, ease: "easeOut"}}
-                    className="w-full"
-                >
-                    <InfoContent activeTab={activeTab} userInfos={user}/>
-                </motion.div>
-            </AnimatePresence>
-            <Separator className="my-2"/>
-            <DisconnectAlertDialog buttonFullWidth/>
+            <Separator className="my-2" />
+            <ScrollArea className="w-full flex-1 overflow-y-auto">
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeTab.title}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="w-full"
+                    >
+                        <InfoContent activeTab={activeTab} userInfos={user} />
+                    </motion.div>
+                </AnimatePresence>
+                <ScrollBar/>
+            </ScrollArea>
+            <Separator className="my-2" />
+            <DisconnectAlertDialog buttonFullWidth />
         </div>
     )
 }
 
 
-function InfoContent({userInfos, activeTab}: Readonly<{ activeTab: InfoScope, userInfos: MeResponse }>) {
+function InfoContent({ userInfos, activeTab }: Readonly<{ activeTab: InfoScope, userInfos: MeResponse }>) {
     if (activeTab.items.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-8 text-muted-foreground w-full min-h-37.5">
-                <Info className="size-8 mb-2 stroke-1"/>
+                <Info className="size-8 mb-2 stroke-1" />
                 <span className="text-sm font-medium">Aucune information disponible.</span>
             </div>
         );
@@ -113,7 +117,7 @@ function InfoContent({userInfos, activeTab}: Readonly<{ activeTab: InfoScope, us
                                     {Icon && (
                                         <div
                                             className="flex items-center justify-center size-9 rounded-md bg-primary/10 text-primary shrink-0">
-                                            <Icon className="size-4"/>
+                                            <Icon className="size-4" />
                                         </div>
                                     )}
                                     <div className="flex flex-col min-w-0">
